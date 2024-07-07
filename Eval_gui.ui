@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>724</width>
+    <height>771</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>10</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Калькулятор с выражением</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="Eval_gui.qrc">
+    <normaloff>:/Calc.ico</normaloff>:/Calc.ico</iconset>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout" rowstretch="10,10,10,10,20,10,120">
+    <item row="3" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,10">
+      <property name="rightMargin">
+       <number>600</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="labelRez_2">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Точность </string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="spin_precision">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="contextMenuPolicy">
+         <enum>Qt::CustomContextMenu</enum>
+        </property>
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Поле для ввода точности. Точность задается в дипозоне от 5 до 16. При этом подразумевается полная точность с учетом целой и дробной частей.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="maximum">
+         <number>16</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="4" column="0">
+     <widget class="QGroupBox" name="groupRad">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Тригонометрические функции могут вычисляться в радианах или градусах. Если есть необходимость вычислять одновременно в радианах и градусах, то можно использовать преобразование радиан в градусы или наоборот. Если задан вариант в градусах, то для расчета прямых тригонометрических функций в радианах можно использовать формулу типа &lt;span style=&quot; font-weight:600;&quot;&gt;sin(radians(x))&lt;/span&gt;, а для обратных &lt;span style=&quot; font-weight:600;&quot;&gt;degrees(asin(x))&lt;/span&gt;.  Если задан вариант в радианах, то для расчета прямых тригонометрических функций в градусах можно использовать формулу типа&lt;span style=&quot; font-weight:600;&quot;&gt; sin(degrees (x))&lt;/span&gt;, а для обратных&lt;span style=&quot; font-weight:600;&quot;&gt; radians (asin(x))&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="title">
+       <string>Тригонаметрические функции</string>
+      </property>
+      <widget class="QRadioButton" name="radioB_rad">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>26</y>
+         <width>89</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Если есть необходимость вычислять одновременно в радианах и градусах, то можно использовать преобразование радиан в градусы или наоборот. Если задан вариант в радианах, то для расчета прямых тригонометрических функций в градусах можно использовать формулу типа&lt;span style=&quot; font-weight:600;&quot;&gt; sin(degrees (x))&lt;/span&gt;, а для обратных&lt;span style=&quot; font-weight:600;&quot;&gt; radians (asin(x))&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="text">
+        <string>В радианах</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="radioB_Deg">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>48</y>
+         <width>89</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Если есть необходимость вычислять одновременно в радианах и градусах, то можно использовать преобразование радиан в градусы или наоборот.  Если задан вариант в градусах, то для расчета прямых тригонометрических функций в радианах можно использовать формулу типа &lt;span style=&quot; font-weight:600;&quot;&gt;sin(radians(x))&lt;/span&gt;, а для обратных &lt;span style=&quot; font-weight:600;&quot;&gt;degrees(asin(x))&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="text">
+        <string>В градусах</string>
+       </property>
+      </widget>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QLabel" name="labelCalc">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Выражение</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTextEdit" name="textCalc">
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="contextMenuPolicy">
+         <enum>Qt::CustomContextMenu</enum>
+        </property>
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Поле для ввода выражения. В вырадении можно задавать функции. Подробный синтаксический контроль выражения не производится. Если выражение задано неверно, или аргумент имеет недопустимое значение, то при расчете в поле Результат выдается сообщение: &lt;span style=&quot; font-weight:600;&quot;&gt;Ошибка в выражении и/или аргументах&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="5" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
+      <item>
+       <widget class="QPushButton" name="pushB_Calc">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Alt+E Вычислить</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushB_Clear">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Alt-C Очистить выражение</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushB_Save">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Alt-S Сохранить настройки</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushB_Exit">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Alt-F4 Выход</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,10">
+      <item>
+       <widget class="QLabel" name="labelRez">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Результат</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="txtRez">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>....</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="6" column="0">
+     <widget class="QScrollArea" name="scrollArea">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOn</enum>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidgetContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>687</width>
+         <height>884</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QPushButton" name="pushB_consplus">
+            <property name="text">
+             <string>+</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushB_consminus">
+            <property name="text">
+             <string>-</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushB_consmult">
+            <property name="text">
+             <string>*</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushB_consdev">
+            <property name="text">
+             <string>/</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushB_consdegree">
+            <property name="text">
+             <string>**</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushBf_brackets">
+            <property name="text">
+             <string>()</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushBf_fabs">
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="text">
+           <string>fabs(X) - модуль X</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushBf_factorial">
+          <property name="text">
+           <string>factorial(X) - факториал числа X</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushBf_exp">
+          <property name="text">
+           <string>exp(X) - eX (e в степени X)</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushBf_log">
+          <property name="text">
+           <string>log(X, [base]) - логарифм X по основанию base. Если base не указан, вычисляется натуральный логарифм</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushBf_log10">
+          <property name="text">
+           <string>log10(X) - логарифм X по основанию 10</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushBf_log2">
+          <property name="text">
+           <string>log2(X) - логарифм X по основанию 2</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushBf_pow">
+          <property name="text">
+           <string>pow(X, Y) - X в степени Y. Можно использовать X**Y</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushBf_sqrt">
+          <property name="text">
+           <string>sqrt(X) - квадратный корень из X</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushBf_acos">
+          <property name="text">
+           <string>acos(X) - арккосинус X</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushBf_asin">
+          <property name="text">
+           <string>asin(X) - арксинус X</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushBf_atan">
+          <property name="text">
+           <string>atan(X) - арктангенс X</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushBf_atan2">
+          <property name="text">
+           <string>atan2(Y, X) - арктангенс Y/X.  С учетом четверти, в которой находится точка (X, Y)</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushBf_cos">
+          <property name="text">
+           <string>cos(X) - косинус X</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushBf_sin">
+          <property name="text">
+           <string>sin(X) - синус X</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushBf_tan">
+          <property name="text">
+           <string>tan(X) - тангенс X</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushBf_cosh">
+          <property name="text">
+           <string>cosh(X) - гиперболический косинус X</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushBf_sinh">
+          <property name="text">
+           <string>sinh(X) - гиперболический синус X</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushBf_tanh">
+          <property name="text">
+           <string>tanh(X) - гиперболический тангенс X</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushBf_acosh">
+          <property name="text">
+           <string>acosh(X) - обратный гиперболический косинус X</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushBf_asinh">
+          <property name="text">
+           <string>asinh(X) -  обратный гиперболический синус X</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushBf_atanh">
+          <property name="text">
+           <string>atanh(X) - обратный гиперболический тангенс X</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushBf_gamma">
+          <property name="text">
+           <string>gamma(X) - гамма-функция X</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushBf_lgamma">
+          <property name="text">
+           <string>lgamma(X) - натуральный логарифм гамма-функции X</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushBf_hypot">
+          <property name="text">
+           <string>hypot(X, Y) -  гипотенуза треугольника с катетами X и Y (sqrt(x * x + y * y))</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushBf_degrees">
+          <property name="text">
+           <string>degrees(X) - конвертирует радианы в градусы</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushBf_radians">
+          <property name="text">
+           <string>radians(X) - конвертирует градусы в радианы</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushB_conspi">
+          <property name="text">
+           <string>pi - число pi = 3,1415926....</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushB_conse">
+          <property name="text">
+           <string>e - число e = 2,718281....</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QCheckBox" name="checkBSel">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Если установлен этот флажок, то после рачета выражение выделяется. Если после рачета не снять выделение вручную, то при вводе данных в поле &lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;Выражение&lt;/span&gt; выделяемый текст заменится на вводимый&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="text">
+       <string>Выделять выражение после расчета</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <tabstops>
+  <tabstop>textCalc</tabstop>
+  <tabstop>checkBSel</tabstop>
+  <tabstop>radioB_rad</tabstop>
+  <tabstop>radioB_Deg</tabstop>
+  <tabstop>pushB_Calc</tabstop>
+  <tabstop>pushB_Clear</tabstop>
+  <tabstop>pushB_Save</tabstop>
+  <tabstop>pushB_Exit</tabstop>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>pushBf_fabs</tabstop>
+  <tabstop>pushBf_factorial</tabstop>
+  <tabstop>pushBf_exp</tabstop>
+  <tabstop>pushBf_log</tabstop>
+  <tabstop>pushBf_log10</tabstop>
+  <tabstop>pushBf_log2</tabstop>
+  <tabstop>pushBf_pow</tabstop>
+  <tabstop>pushBf_sqrt</tabstop>
+  <tabstop>pushBf_acos</tabstop>
+  <tabstop>pushBf_asin</tabstop>
+  <tabstop>pushBf_atan</tabstop>
+  <tabstop>pushBf_atan2</tabstop>
+  <tabstop>pushBf_cos</tabstop>
+  <tabstop>pushBf_sin</tabstop>
+  <tabstop>pushBf_tan</tabstop>
+  <tabstop>pushBf_cosh</tabstop>
+  <tabstop>pushBf_sinh</tabstop>
+ </tabstops>
+ <resources>
+  <include location="Eval_gui.qrc"/>
+ </resources>
+ <connections/>
+</ui>
