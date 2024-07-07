@@ -1,3 +1,4 @@
+# Калькулятор с формулами
 from math import *
 import numpy
 from Eval_gui import Ui_MainWindow
