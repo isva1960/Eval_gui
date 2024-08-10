@@ -133,7 +133,7 @@
          <enum>Qt::CustomContextMenu</enum>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Поле для ввода выражения. В вырадении можно задавать функции. Подробный синтаксический контроль выражения не производится. Если выражение задано неверно, или аргумент имеет недопустимое значение, то при расчете в поле Результат выдается сообщение: &lt;span style=&quot; font-weight:600;&quot;&gt;Ошибка в выражении и/или аргументах&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Поле для ввода выражения. В выражении можно задавать функции. Подробный синтаксический контроль выражения не производится. Если выражение задано неверно, или аргумент имеет недопустимое значение, то при расчете в поле Результат выдается сообщение: &lt;span style=&quot; font-weight:600;&quot;&gt;Ошибка в выражении и/или аргументах&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
       </item>
@@ -270,7 +270,7 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-446</y>
+         <y>0</y>
          <width>683</width>
          <height>1034</height>
         </rect>
