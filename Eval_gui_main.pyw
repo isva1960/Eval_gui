@@ -1,18 +1,116 @@
-import configparser
-import os
 from math import *
 import numpy
+import re
 from Eval_gui import Ui_MainWindow
 import sys
 from PyQt5 import QtWidgets, Qt
-from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QTextCursor
 from PyQt5.QtCore import QSettings
 from Translate_menu import Object_menu
-import decimal
+from functools import wraps
 
 ORGANIZATION_NAME = "isva_company"
 APPLICATION_NAME = "Eval_gui"
+f_degrees = False  # признак расчета тригонометрических функции в градусах
+
+
+def func_decorator_tgp(func):
+    """
+    Декоратор для выполнения прямой тригонометрической функции
+    @param func: название функции
+    @return: результат
+    """
+
+    @wraps(func)
+    def wrapper(*args):
+        if f_degrees:  # Если заданы градусы
+            res = func(radians(*args))  # то градусы преобразовываем в радианы и вызываем функцию
+        else:
+            res = func(*args)  # вызываем функцию без преобразования
+        return res
+
+    return wrapper
+
+
+def func_decorator_tgo(func):
+    """
+    Декоратор для выполнения обратной тригонометрической функции
+    @param func: название функции
+    @return: результат
+    """
+
+    @wraps(func)
+    def wrapper(*args):
+        if f_degrees:  # Если заданы градусы
+            res = degrees(func(*args))  # то вызываем функцию и радианы преобразовываем в градусы
+        else:
+            res = func(*args)  # вызываем функцию без преобразования
+        return res
+
+    return wrapper
+
+
+def cotan(x):
+    """
+    Функция для расчета котангенса
+    """
+    return 1.0 / tan(x)
+
+
+def acotan(x):
+    """
+    Функция для расчета арктангенса
+    """
+    return pi / 2.0 - atan(x)
+
+
+def cth(x):
+    """
+    Функция для расчета гиперболического котангенса
+    """
+    return 1 / tanh(x)
+
+
+def ln(x):
+    """
+    Функция для расчета натурального логарифма
+    """
+    return log(x, e)
+
+
+def arcth(x):
+    """
+    Функция для расчета гиперболического арккотангенса
+    """
+    return ln((x + 1) / (x - 1)) / 2
+
+
+def nofun():
+    return 1 / 0
+
+
+sin = func_decorator_tgp(sin)
+cos = func_decorator_tgp(cos)
+tg = func_decorator_tgp(tan)
+ctg = func_decorator_tgp(cotan)
+sh = func_decorator_tgp(sinh)
+ch = func_decorator_tgp(cosh)
+th = func_decorator_tgp(tanh)
+cth = func_decorator_tgp(cth)
+
+arcsin = func_decorator_tgo(asin)
+arccos = func_decorator_tgo(acos)
+arctg = func_decorator_tgo(atan)
+arcctg = func_decorator_tgo(acotan)
+atan2 = func_decorator_tgo(atan2)
+arsh = func_decorator_tgo(asinh)
+arch = func_decorator_tgo(acosh)
+arth = func_decorator_tgo(atanh)
+abs = fabs
+lgb = log2
+
+lst_nofun = (
+    'fabs', 'tan', 'cosh', 'sinh', 'tanh', 'cotan', 'acos', 'asin', 'atan', 'acotan', 'log2', 'asinh', 'acosh', 'atanh')
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -64,28 +162,32 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         event.accept()  # Закрываем окно
 
     def Save_ini(self):
+        # сохранение настроек
         self.settings.setValue(self.values_section + "/Precision", self.spin_precision.value())
         self.settings.setValue(self.values_section + "/Select", str(self.checkBSel.isChecked()))
         self.settings.setValue(self.values_section + "/Rad_Deg", str(self.radioB_rad.isChecked()))
 
     def run_exit(self):
+        # закрыие окна
         self.close()
 
     def Clear_Calc(self):
+        # очистка текста выражения
         self.textCalc.clear()
 
     def add_txt(self):  # обработчик при нажатии кнопки функции
         txt = self.sender().text()  # получаем текст кнопки
         txtf = txt.split("(")[0] + (
-            "()")  # из текста выделяем название функции, т.е. текст до открывающей скобки, к этому названию добавляем скобки
-        selected_text = self.textCalc.textCursor().selectedText()  # и полученный текст добавлеям в позицию курсора
+            "()")  # из текста выделяем название функции, т.е. текст до открывающей скобки, к этому названию
+        # добавляем скобки
+        selected_text = self.textCalc.textCursor().selectedText()  # и полученный текст добавляем в позицию курсора
         # Если есть выделенный текст, заменяем его новым текстом
         if selected_text:
             self.textCalc.insertPlainText(txtf)
-            # Удалаем выделенный текст
+            # Удаляем выделенный текст
             self.textCalc.textCursor().removeSelectedText()
         else:
-            self.textCalc.insertPlainText(txtf)  # и полученный текст добавлеям в позицию курсора
+            self.textCalc.insertPlainText(txtf)  # и полученный текст добавляем в позицию курсораа
         cursor = self.textCalc.textCursor()
         # Перемещаем курсор на одну позицию влево
         cursor.movePosition(QTextCursor.Left)
@@ -96,31 +198,25 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def add_txtc(self):  # обработчик при нажатии кнопки констант
         txt = self.sender().text()  # получаем текст кнопки
         txtf = txt.split(" ")[0]  # из текста выделяем название константы, т.е. текст до пробела,
-        # self.textCalc.setText(self.textCalc.toPlainText() + txtf)  # и полученный текст добавлеям в конец выражения
         selected_text = self.textCalc.textCursor().selectedText()
         if selected_text:
             self.textCalc.insertPlainText(txtf)
-            # Удалаем выделенный текст
+            # Удаляем выделенный текст
             self.textCalc.textCursor().removeSelectedText()
         else:
-            # self.textCalc.setText(self.textCalc.toPlainText() + txtf)  # и полученный текст добавлеям в конец выражения
             self.textCalc.insertPlainText(txtf)
         self.textCalc.setFocus()
 
     def Calc(self):
-        lst_tgp = ("cos", "sin", "tan", "coshа", "sinh")
-        lst_tgo = ("acos", "asin", "atan", "acosh", "asinh", "atanh")
-        lst_tgo2 = ("atan2", "{{{{{{{{")
+        # вичисление выражения
         expression = self.textCalc.toPlainText()
-        expression = expression.replace("\n", "")
-        if self.radioB_Deg.isChecked():
-            for fn in lst_tgo:
-                expression = expression.replace(fn + "(",
-                                                "tgo(" + fn + ",")  # заменяем типа asin( на типа tgo~(asin, т.к. м.б. типа sin
-            for fn in lst_tgp:
-                expression = expression.replace(fn + "(", "tgp(" + fn + ",")  # заменяем типа sin( на типа tgp~(sin,
-            for fn in lst_tgo2:
-                expression = expression.replace(fn + "(", "tgo2(" + fn + ",")
+        expression = expression.replace("\n", "").replace(" ", "")
+        pstr = r'\b(~)\b'
+        pstr = pstr.replace('~', "|".join(lst_nofun))
+        expression = re.sub(pstr, 'nofun', expression)
+        print(expression)
+        global f_degrees
+        f_degrees = self.radioB_Deg.isChecked()
         try:
             result = eval(expression)
             lnlenint = self.spin_precision.value() - len(str(int(result)))
@@ -133,18 +229,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if self.checkBSel.isChecked():
             self.textCalc.selectAll()
         self.textCalc.setFocus()
-
-
-def tgp(fn, x):  # Для прямых тригонаметрических функций с одним аргументом
-    return (fn(radians(x)))  # переводим градусы в радианы и вычисляем тригонаметрическую функцию fn в радинах
-
-
-def tgo(fn, x):  # Для обратных тригонаметрических функций с одним аргументом
-    return degrees(fn(x))  # вычисляем тригонаметрическую функцию fn в радинах и переводим радианы в градусы
-
-
-def tgo2(fn, x, y):  # Для обратных тригонаметрических функций с двумя аргументами
-    return degrees(fn(x, y))  # вычисляем тригонаметрическую функцию fn в радинах и переводим радианы в градусы
 
 
 if __name__ == '__main__':
