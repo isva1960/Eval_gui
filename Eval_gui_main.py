@@ -50,20 +50,23 @@ def func_decorator_tgo(func):
     return wrapper
 
 
-def cotan(x):
+@func_decorator_tgp
+def ctg(x):
     """
     Функция для расчета котангенса
     """
     return 1.0 / tan(x)
 
 
-def acotan(x):
+@func_decorator_tgo
+def arcctg(x):
     """
     Функция для расчета арктангенса
     """
     return pi / 2.0 - atan(x)
 
 
+# @func_decorator_tgp
 def cth(x):
     """
     Функция для расчета гиперболического котангенса
@@ -78,6 +81,7 @@ def ln(x):
     return log(x, e)
 
 
+# @func_decorator_tgo
 def arcth(x):
     """
     Функция для расчета гиперболического арккотангенса
@@ -85,32 +89,32 @@ def arcth(x):
     return ln((x + 1) / (x - 1)) / 2
 
 
-def nofun():
-    return 1 / 0
-
-
 sin = func_decorator_tgp(sin)
 cos = func_decorator_tgp(cos)
 tg = func_decorator_tgp(tan)
-ctg = func_decorator_tgp(cotan)
-sh = func_decorator_tgp(sinh)
-ch = func_decorator_tgp(cosh)
-th = func_decorator_tgp(tanh)
-cth = func_decorator_tgp(cth)
+# sh = func_decorator_tgp(sinh)
+# ch = func_decorator_tgp(cosh)
+# th = func_decorator_tgp(tanh)
 
 arcsin = func_decorator_tgo(asin)
 arccos = func_decorator_tgo(acos)
 arctg = func_decorator_tgo(atan)
-arcctg = func_decorator_tgo(acotan)
 atan2 = func_decorator_tgo(atan2)
-arsh = func_decorator_tgo(asinh)
-arch = func_decorator_tgo(acosh)
-arth = func_decorator_tgo(atanh)
+# arsh = func_decorator_tgo(asinh)
+# arch = func_decorator_tgo(acosh)
+# arth = func_decorator_tgo(atanh)
+
 abs = fabs
 lgb = log2
+sh = sinh
+ch = cosh
+th = tanh
+arsh = asinh
+arch = acosh
+arth = atanh
 
 lst_nofun = (
-    'fabs', 'tan', 'cosh', 'sinh', 'tanh', 'cotan', 'acos', 'asin', 'atan', 'acotan', 'log2', 'asinh', 'acosh', 'atanh')
+    'fabs', 'tan', 'cosh', 'sinh', 'tanh', 'acos', 'asin', 'atan', 'log2', 'asinh', 'acosh', 'atanh')
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -210,13 +214,15 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def Calc(self):
         # вичисление выражения
         expression = self.textCalc.toPlainText()
-        expression = expression.replace("\n", "").replace(" ", "")
+        # удаление перевода сироки, пробелов.
+        # Замена "^" на "**" (возведение в степень)
+        expression = expression.replace("\n", "").replace(" ", "").replace("^", "**")
+        # Замена дубликатов функций на недопустимое выражение '-*~!'
         pstr = r'\b(~)\b'
         pstr = pstr.replace('~', "|".join(lst_nofun))
-        expression = re.sub(pstr, 'nofun', expression)
-        print(expression)
+        expression = re.sub(pstr, '-*~!', expression)
         global f_degrees
-        f_degrees = self.radioB_Deg.isChecked()
+        f_degrees = self.radioB_Deg.isChecked()  # Признак расчета в градусах
         try:
             result = eval(expression)
             lnlenint = self.spin_precision.value() - len(str(int(result)))
