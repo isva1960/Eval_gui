@@ -113,6 +113,8 @@ arsh = asinh
 arch = acosh
 arth = atanh
 
+# lst_nofun = ('fabs', 'tan', 'cosh', 'sinh', 'tanh', 'acos', 'asin', 'atan', 'log2', 'asinh', 'acosh', 'atanh', '|', '&', '^')
+
 lst_nofun = (
     'fabs', 'tan', 'cosh', 'sinh', 'tanh', 'acos', 'asin', 'atan', 'log2', 'asinh', 'acosh', 'atanh')
 
@@ -122,7 +124,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         super().__init__()
         self.setupUi(self)
         self.add_functions()
-        self.path = "Eval_gui.ini"
         self.menu_obj = Object_menu()
         self.textCalc.customContextMenuRequested.connect(self.menu_obj.show_menu_text)
         self.spin_precision.customContextMenuRequested.connect(self.menu_obj.show_menu_spinbox)
@@ -214,15 +215,17 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def Calc(self):
         # вичисление выражения
         expression = self.textCalc.toPlainText()
-        # удаление перевода сироки, пробелов.
-        # Замена "^" на "**" (возведение в степень)
-        expression = expression.replace("\n", "").replace(" ", "").replace("^", "**")
-        # Замена дубликатов функций на недопустимое выражение '-*~!'
-        pstr = r'\b(~)\b'
-        pstr = pstr.replace('~', "|".join(lst_nofun))
-        expression = re.sub(pstr, '-*~!', expression)
+        # удаление перевода строки, пробелов.
+        # Замена пробельных символов на пустой и "^" на "**" (возведение в степень)
+        expression = re.sub(r'\s', '', expression).replace("^", "**")
+        expression = re.sub(r'[|#~&]', '$', expression)
+        # Замена дубликатов функций на недопустимое выражение '$'
+        pstr = r'\b(' + "|".join(lst_nofun) + r')\b'
+        # print(pstr)
+        expression = re.sub(pstr, '$', expression)
         global f_degrees
         f_degrees = self.radioB_Deg.isChecked()  # Признак расчета в градусах
+        # print(expression)
         try:
             result = eval(expression)
             lnlenint = self.spin_precision.value() - len(str(int(result)))
