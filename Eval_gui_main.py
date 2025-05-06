@@ -8,6 +8,7 @@ from PyQt5.QtGui import QTextCursor
 from PyQt5.QtCore import QSettings
 from Translate_menu import Object_menu
 from functools import wraps
+from PyQt5.QtCore import QTranslator, QLibraryInfo
 
 ORGANIZATION_NAME = "isva_company"
 APPLICATION_NAME = "Eval_gui"
@@ -143,15 +144,15 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def add_functions(self):
         for button in self.findChildren(Qt.QPushButton):  # просматриваем все кнопки
-            if button.objectName()[0:6] == "pushBf":  # если имя кнопки начинается с pushBf (это кнопки функций) ,
+            if button.objectName()[0:6] == "pushBf":  # если имя кнопки начинается с pushBf (это кнопки функций),
                 button.clicked.connect(self.add_txt)  # то подключаем обработчик при нажатии (add_txt)
 
         for button in self.findChildren(Qt.QPushButton):  # просматриваем все кнопки
             if button.objectName()[
-               0:10] == "pushB_cons":  # если имя кнопки начинается с pushB_cons (это кнопки констант) ,
+               0:10] == "pushB_cons":  # если имя кнопки начинается с pushB_cons (это кнопки констант),
                 button.clicked.connect(self.add_txtc)  # то подключаем обработчик при нажатии (add_txtc)
 
-        self.pushB_Exit.clicked.connect(self.run_exit)
+        self.pushB_Exit.clicked.connect(self.close)
         self.pushB_Clear.clicked.connect(self.Clear_Calc)
         self.pushB_Save.clicked.connect(self.Save_ini)
         self.pushB_Calc.clicked.connect(self.Calc)
@@ -172,10 +173,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.settings.setValue(self.values_section + "/Select", str(self.checkBSel.isChecked()))
         self.settings.setValue(self.values_section + "/Rad_Deg", str(self.radioB_rad.isChecked()))
 
-    def run_exit(self):
-        # закрыие окна
-        self.close()
-
     def Clear_Calc(self):
         # очистка текста выражения
         self.textCalc.clear()
@@ -192,7 +189,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             # Удаляем выделенный текст
             self.textCalc.textCursor().removeSelectedText()
         else:
-            self.textCalc.insertPlainText(txtf)  # и полученный текст добавляем в позицию курсораа
+            self.textCalc.insertPlainText(txtf)  # и полученный текст добавляем в позицию курсора
         cursor = self.textCalc.textCursor()
         # Перемещаем курсор на одну позицию влево
         cursor.movePosition(QTextCursor.Left)
@@ -242,6 +239,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
+    qt_translator = QTranslator()
+    qt_translator.load("qtbase_ru", QLibraryInfo.location(QLibraryInfo.TranslationsPath))
+    app.installTranslator(qt_translator)
     Window = MainWindow()
     Window.show()
     sys.exit(app.exec_())
