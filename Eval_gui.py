@@ -35,7 +35,7 @@ class Ui_MainWindow(object):
         self.labelCalc.setFont(font)
         self.labelCalc.setObjectName("labelCalc")
         self.horizontalLayout_2.addWidget(self.labelCalc)
-        self.textCalc = QtWidgets.QTextEdit(self.centralwidget)
+        self.textCalc = MyTextEdit(self.centralwidget)
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
@@ -389,7 +389,7 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Калькулятор с выражением"))
         self.labelCalc.setText(_translate("MainWindow", "Выражение"))
-        self.textCalc.setToolTip(_translate("MainWindow", "<html><head/><body><p>Поле для ввода выражения. В выражении можно задавать функции. Подробный синтаксический контроль выражения не производится. Если выражение задано неверно, или аргумент имеет недопустимое значение, то при расчете в поле Результат выдается сообщение: <span style=\" font-weight:600;\">Ошибка в выражении и/или аргументах</span></p></body></html>"))
+        self.textCalc.setToolTip(_translate("MainWindow", "<html><head/><body><p>Поле для ввода выражения. В выражении можно задавать функции. Подробный синтаксический контроль выражения не производится. Если выражение задано неверно, или аргумент имеет недопустимое значение, то при расчете в поле <span style=\" font-weight:600; font-style:italic;\">Результат</span> выдается сообщение: <span style=\" font-weight:600;\">Ошибка в выражении и/или аргументах. </span><br/>При нажатии коавиши <span style=\" font-weight:600;\">Enter</span> просходит вычисление выражения.</p></body></html>"))
         self.labelRez.setText(_translate("MainWindow", "Результат"))
         self.txtRez.setText(_translate("MainWindow", "...."))
         self.checkBSel.setToolTip(_translate("MainWindow", "<html><head/><body><p>Если установлен этот флажок, то после рачета выражение выделяется. Если после рачета не снять выделение вручную, то при вводе данных в поле <span style=\" font-weight:600; font-style:italic;\">Выражение</span> выделяемый текст заменится на вводимый</p></body></html>"))
@@ -456,6 +456,7 @@ class Ui_MainWindow(object):
         self.pushBf_radians.setText(_translate("MainWindow", "radians(X) - конвертирует градусы в радианы"))
         self.pushB_conspi.setText(_translate("MainWindow", "pi - число pi = 3,1415926...."))
         self.pushB_conse.setText(_translate("MainWindow", "e - число e = 2,718281...."))
+from myclasses import MyTextEdit
 import Eval_gui_rc
 
 
