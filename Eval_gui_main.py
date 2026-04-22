@@ -4,7 +4,7 @@ import re
 import sys
 from PyQt5 import QtWidgets
 from PyQt5.QtGui import QTextCursor
-from PyQt5.QtCore import QSettings, Qt
+from PyQt5.QtCore import QSettings
 from functools import wraps
 from PyQt5.QtCore import QTranslator, QLibraryInfo
 from Eval_gui import Ui_MainWindow
